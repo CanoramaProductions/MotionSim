@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MotionSim</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>MotionSim</h1>
+      <div class="controls" id="controls">
+        <button id="addCircle">Add Circle</button>
+        <button id="addRectangle">Add Rectangle</button>
+        <button id="reset">Reset</button>
+        <label for="gravity">Gravity:</label>
+        <input type="range" id="gravity" min="0" max="20" step="1" value="9.8">
+      </div>
+    </header>
+    <canvas id="simulationCanvas"></canvas>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
