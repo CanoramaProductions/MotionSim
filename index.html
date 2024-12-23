@@ -10,12 +10,24 @@
   <div class="container">
     <header>
       <h1>MotionSim</h1>
-      <div class="controls" id="controls">
+      <div class="controls">
+        <div class="toggle">
+          <label for="cursorMode">Cursor Mode:</label>
+          <select id="cursorMode">
+            <option>Move</option>
+            <option>Modify</option>
+            <option>Recolor</option>
+            <option>Anchor</option>
+          </select>
+        </div>
         <button id="addCircle">Add Circle</button>
         <button id="addRectangle">Add Rectangle</button>
+        <button id="addTriangle">Add Triangle</button>
         <button id="reset">Reset</button>
         <label for="gravity">Gravity:</label>
         <input type="range" id="gravity" min="0" max="20" step="1" value="9.8">
+        <label for="timeModifier">Time Speed:</label>
+        <input type="range" id="timeModifier" min="0.1" max="3" step="0.1" value="1">
       </div>
     </header>
     <canvas id="simulationCanvas"></canvas>
