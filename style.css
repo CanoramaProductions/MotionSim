@@ -1,80 +1,87 @@
-/* General Styles */
 body {
   margin: 0;
+  overflow: hidden;
   font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
-  color: #333;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
-header {
-  background-color: #282c34;
-  padding: 10px;
+#ui {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #2e2e2e;
   color: white;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+h1 {
+  margin: 0;
+}
+
+.controls, .shapes {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 1.5rem;
-}
-
-.controls {
-  display: flex;
   gap: 10px;
 }
 
-button, input, select {
-  padding: 5px 10px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 4px;
-}
-
-button {
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-button:active {
-  transform: scale(0.95);
+label {
+  font-size: 14px;
 }
 
 input[type="range"] {
   width: 100px;
 }
 
-.toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #ddd;
+button {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
 }
 
-.playground {
-  flex-grow: 1;
-  position: relative;
-  background: linear-gradient(to bottom, #eef, #cce);
+button:hover {
+  background: #666;
+}
+
+.shape-btn {
+  width: 50px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #555;
+  border-radius: 5px;
 }
 
-canvas {
-  border: 2px solid #444;
+.shape-btn:hover {
+  background: #777;
+}
+
+#playground {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 70px);
+  background: linear-gradient(to bottom, #c9e4ff, #87bdd8);
+}
+
+.zoom-controls {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.zoom-controls button {
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
 }
