@@ -1,16 +1,17 @@
 const canvas = document.getElementById('simulationCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.height = window.innerHeight - 100;
 
 let objects = [];
-let joints = [];
-let selectedObject = null;
 let cursorMode = 'Move';
 let gravity = 9.8;
 let timeModifier = 1;
 
-// Helper function: Detect mouse over object
+// Ground Collision
+const groundY = canvas.height - 50;
+
+// Helper function to detect mouse over object
 function isMouseOverObject(mouseX, mouseY, obj) {
   if (obj instanceof Circle) {
     return Math.hypot(mouseX - obj.x, mouseY - obj.y) <= obj.radius;
@@ -56,9 +57,12 @@ class Circle extends Shape {
   }
 
   update() {
-    if (!this.anchored) {
+    if (!this.anchored && this.y + this.radius < groundY) {
       this.vy += gravity * 0.1 * timeModifier;
       this.y += this.vy;
+    } else {
+      this.vy = 0;
+      this.y = groundY - this.radius;
     }
     this.draw();
   }
@@ -82,43 +86,18 @@ class Rectangle extends Shape {
   }
 
   update() {
-    if (!this.anchored) {
+    if (!this.anchored && this.y + this.height < groundY) {
       this.vy += gravity * 0.1 * timeModifier;
       this.y += this.vy;
+    } else {
+      this.vy = 0;
+      this.y = groundY - this.height;
     }
     this.draw();
   }
 }
 
-// Example for a Triangle class
-class Triangle extends Shape {
-  constructor(x, y, size, color) {
-    super(x, y, color);
-    this.size = size;
-    this.vy = 0;
-  }
-
-  draw() {
-    ctx.beginPath();
-    ctx.moveTo(this.x, this.y);
-    ctx.lineTo(this.x - this.size, this.y + this.size);
-    ctx.lineTo(this.x + this.size, this.y + this.size);
-    ctx.closePath();
-    ctx.strokeStyle = this.color;
-    ctx.lineWidth = 2;
-    ctx.stroke();
-  }
-
-  update() {
-    if (!this.anchored) {
-      this.vy += gravity * 0.1 * timeModifier;
-      this.y += this.vy;
-    }
-    this.draw();
-  }
-}
-
-// Add shapes to canvas
+// Event Listeners
 document.getElementById('addCircle').addEventListener('click', () => {
   objects.push(new Circle(100, 100, 50, 'blue'));
 });
@@ -127,13 +106,8 @@ document.getElementById('addRectangle').addEventListener('click', () => {
   objects.push(new Rectangle(200, 100, 100, 50, 'green'));
 });
 
-document.getElementById('addTriangle').addEventListener('click', () => {
-  objects.push(new Triangle(300, 100, 50, 'red'));
-});
-
 document.getElementById('reset').addEventListener('click', () => {
   objects = [];
-  joints = [];
 });
 
 document.getElementById('gravity').addEventListener('input', (e) => {
@@ -148,9 +122,11 @@ document.getElementById('cursorMode').addEventListener('change', (e) => {
   cursorMode = e.target.value;
 });
 
-// Animate and update
+// Animation Loop
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#444';
+  ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
   objects.forEach((obj) => obj.update());
   requestAnimationFrame(animate);
 }
